@@ -75,7 +75,7 @@ export default function Header() {
           <div className="md:hidden absolute top-full left-0 w-full bg-white shadow-lg z-50 py-4 px-6 mobile-menu animate-fade-in-down">
             <div className="flex flex-col space-y-4">
               <Link 
-                href="#" 
+                href="/" 
                 className="text-gray-600 hover:text-primary transition-colors py-2 border-b border-gray-100"
                 onClick={() => setMobileMenuOpen(false)}
               >
@@ -89,7 +89,7 @@ export default function Header() {
                 使用指南
               </Link>
               <Link 
-                href="#" 
+                href="/history" 
                 className="text-gray-600 hover:text-primary transition-colors py-2 border-b border-gray-100"
                 onClick={() => setMobileMenuOpen(false)}
               >

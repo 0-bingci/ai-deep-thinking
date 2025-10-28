@@ -1,12 +1,11 @@
+// app/api/analysis/route.ts
 import { NextResponse } from "next/server";
 import { getAiAnalysis } from "@/lib/ai";
-import db from "@/lib/db";
-import { FunctionType } from "@/types";
 
 // 处理 POST 请求（接收用户输入）
 export async function POST(request: Request) {
   try {
-    const { inputText, functionType, userId } = await request.json();
+    const { inputText, functionType } = await request.json(); // 移除 userId 相关接收
 
     // 1. 验证输入
     if (!inputText || !functionType) {
@@ -23,27 +22,16 @@ export async function POST(request: Request) {
       );
     }
 
-    // 2. 调用 AI 生成分析结果
-    const aiResult = await getAiAnalysis(inputText, functionType as FunctionType);
+    // 2. 调用 AI 生成分析结果（仅保留 AI 调用逻辑）
+    const aiResult = await getAiAnalysis(inputText, functionType as any);
 
-    // 3. 存储结果到数据库
-    const record = await db.analysisRecord.create({
-      data: {
-        inputText,
-        functionType,
-        result: aiResult,
-        userId: userId || "anonymous",  // 匿名用户用固定标识
-      },
-    });
-
-    // 4. 返回结果给前端
+    // 3. 直接返回 AI 结果（不存储到数据库）
     return NextResponse.json({
       success: true,
       data: {
-        recordId: record.id,
-        inputText: record.inputText,
-        result: record.result,
-        createdAt: record.createdAt,
+        inputText,
+        result: aiResult,
+        createdAt: new Date().toISOString(), // 用当前时间作为响应时间
       },
     });
   } catch (error) {
