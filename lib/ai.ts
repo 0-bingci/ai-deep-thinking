@@ -50,6 +50,7 @@ const generatePrompt = (inputText: string, functionType: any) => {
 };
 
 const parseAiResponse = (rawText: string) => {
+  console.log(rawText)
   const sections: { title: string; items: string[] }[] = [];
   // 过滤开头的“用户需求/论点”行
   const lines = rawText.split("\n").filter(line => line.trim() && !line.match(/^用户(需求|论点)：/));
@@ -97,7 +98,7 @@ export const getAiAnalysis = async (
     // 调用 OpenAI API
     const response = await openai.chat.completions.create({
       model: "qwen-plus",  // 可选 gpt-4 提升质量
-      messages: [{ role: "user", content: prompt }],
+      messages: [{ role: "user", content: prompt || "" }],
       temperature: 0.7,  // 控制创造性（0-1）
       max_tokens: 1000,  // 限制响应长度
     });

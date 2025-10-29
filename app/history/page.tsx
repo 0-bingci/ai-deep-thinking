@@ -87,7 +87,7 @@ export default function HistoryPage() {
 
         // 按时间倒序排列
         formattedItems.sort((a, b) =>
-          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+          new Date(b.date).getTime() - new Date(a.date).getTime()
         );
 
         setHistoryItems(formattedItems);
